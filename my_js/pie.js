@@ -362,6 +362,28 @@ option = {
             color: '#fff'
         }
     },
+
+    toolbox: {
+
+　　show: true,
+
+　　feature: {
+
+　　　　saveAsImage: {
+
+　　　　show:true,
+
+　　　　excludeComponents :['toolbox'],
+
+　　　　pixelRatio: 2
+
+　　　　}
+
+　　}
+
+   },
+
+
     backgroundColor: '#404a59',
     visualMap: {
         min: 0,
