@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+  <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script src="js/echarts.js "></script>
+    <script src="js/china.js "></script>
+
+
+
+    <script>
+    var myChart = echarts.init(document.getElementById('main'));
+    myChart.title = '坐标轴刻度与标签对齐';
+    </script>
+
+    <script src="my_js/pie.js "></script>    
+
+    <script>
+    myChart.setOption(option)
+    </script>
+</body>
+</html>
