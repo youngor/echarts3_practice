@@ -8,7 +8,7 @@ k = []
 v = []
 sum = 0
 
-File.foreach("车龄发布.csv",:encoding=>"utf-8") { |line|  
+File.foreach("csv/车龄发布.csv",:encoding=>"utf-8") { |line|  
     a = line.split(/\s+/)
     #pp a
     k<< "'"+a[0]+"'"
