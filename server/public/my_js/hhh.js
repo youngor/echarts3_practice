@@ -1,7 +1,6 @@
 // app.title = '坐标轴刻度与标签对齐';
 
 option = {
-    //saveAsImage: {backgroundColor: '#ffffff'},
     backgroundColor: '#ffffff',
     color: ['#3398DB'],
     tooltip : {
@@ -35,7 +34,7 @@ option = {
             name:'直接访问',
             type:'bar',
             barWidth: '60%',
-            data:[198,728,1829,3050,2779,3327,3311,4239,3756,4396,4367,3843,2133,264,24]  //[a,b]
+            data:[128,726,778,1248,1293,1867,2666,3028,3368,2530,2918,3003,2317,1921,2491]  //[a,b]
         }
     ]
 };

@@ -26,3 +26,21 @@ csv to echart graph and (save locally)
 
 
 template need to be considered ...
+
+
+1. 
+   .3 cd /data/scripts/report/shell 
+   change 车龄分布.sh (换品牌，季度)
+   sh 车龄分布.sh
+   sz ../csv/车龄发布.csv --> c:/temp
+
+2. copy c:\temp\车龄发布.csv  C:\Users\williamchen\Documents\GitHub\echarts3_practice\tools\流向处理\车龄发布.csv
+   cd C:\Users\williamchen\Documents\GitHub\echarts3_practice\tools\流向处理
+   ruby 车龄分布.rb
+
+3. cd C:\Users\williamchen\Documents\GitHub\echarts3_practice\client
+   ruby client_test.rb
+
+4. check C:\Users\williamchen\Documents\GitHub\echarts3_practice\server\public\hhh.png
+
+

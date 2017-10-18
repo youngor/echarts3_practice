@@ -1,6 +1,7 @@
 // app.title = '坐标轴刻度与标签对齐';
 
 option = {
+    backgroundColor: '#ffffff',
     color: ['#3398DB'],
     tooltip : {
         trigger: 'axis',
