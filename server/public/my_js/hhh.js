@@ -26,7 +26,12 @@ option = {
     ],
     yAxis : [
         {
-            type : 'value'
+            type : 'value',
+            axisLabel : {
+                formatter: function(value) {
+                    return value+"%"; 
+                }
+            }
         }
     ],
     series : [
@@ -34,7 +39,7 @@ option = {
             name:'直接访问',
             type:'bar',
             barWidth: '60%',
-            data:[128,726,778,1248,1293,1867,2666,3028,3368,2530,2918,3003,2317,1921,2491]  //[a,b]
+            data:[0.4,2.3,2.5,4.1,4.2,6.1,8.8,9.9,11.1,8.3,9.6,9.9,7.6,6.3,8.2]  //[a,b]
         }
     ]
 };

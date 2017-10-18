@@ -26,7 +26,12 @@ option = {
     ],
     yAxis : [
         {
-            type : 'value'
+            type : 'value',
+            axisLabel : {
+                formatter: function(value) {
+                    return value+"%"; 
+                }
+            }
         }
     ],
     series : [
