@@ -2,7 +2,7 @@
 
 option = {
     backgroundColor: '#ffffff',
-    animation: false,
+    animation: false, // save image...
     legend: {
         orient: 'vertical',
         x: 'left',
