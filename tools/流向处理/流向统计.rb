@@ -146,6 +146,71 @@ File.open('csv/本地交易TOP50城市_out.csv', "w",:encoding=>"gbk") { |iol|
     end
 }
 
+#
+#pie 
+
+
+#//{value:335, name:'直接访问'}, {value:310, name:'邮件营销'},
+def write_pie(recs,name_col,val_col,file_name)
+    str1 = ''
+    min = 0
+    max = 0
+
+    (0..recs.length-1).each do |i|
+        t = recs[i]
+        str1 += '{value:' + t[val_col].to_s + ",name:'" + t[name_col].to_s  + "'},\n"
+        
+        min = t[val_col] if min > t[val_col]
+        max = t[val_col] if max < t[val_col]
+    end
+
+    #puts min,max
+    min = (min * 0.9).round
+    max = (max * 1.1).round
+    #puts min,max
+
+    
+    data = IO.read('../template/pie.template',:encoding=>"utf-8")
+    data.gsub!(/PARAM0/,"#{min}")
+    data.gsub!(/PARAM1/,"#{max}")
+    data.gsub!(/PARAM2/,"#{str1}")
+
+
+    puts data
+
+    IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
+end
+
+#//{name: '海门', value: 9}, {name: '大庆', value: 279}
+def write_map(recs,name_col,val_col,file_name)
+    str1 = ''
+    min = 0
+    max = 0
+
+    (0..recs.length-1).each do |i|
+        t = recs[i]
+        str1 += '{value:' + t[val_col].to_s + ",name:'" + t[name_col].to_s  + "'},\n"
+        min = t[val_col] if min > t[val_col]
+        max = t[val_col] if max < t[val_col]
+    end
+
+    min = (min * 0.9).round
+    max = (max * 1.1).round
+    
+    data = IO.read('../template/map.template',:encoding=>"utf-8")
+    data.gsub!(/PARAM0/,"#{str1}")
+    data.gsub!(/PARAM1/,"#{$cities_gis}")
+    data.gsub!(/PARAM2/,"#{min}")
+    data.gsub!(/PARAM3/,"#{max}")
+
+    puts data
+
+    IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
+end
+
+write_map(recs,0,3,'bd_top50')
+
+
 # 地区  外迁率vo 外迁指数io    外迁量o** => 外迁TOP50城市
 
 recs = recs.sort_by { |a| -a[1]  }  #外迁量o**
@@ -157,6 +222,8 @@ File.open('csv/外迁TOP50城市_out.csv', "w",:encoding=>"gbk") { |iol|
         iol << "#{t[0]},#{t[7]},#{t[8]},#{t[1]}\n"
     end
 }
+
+write_map(recs,0,1,'w_top50')
 
 #五个城市是 recs[0..4]
 #puts recs[0..4].join(',')
@@ -219,6 +286,9 @@ def sum_org_waiqian(c,org,cities,n)
         end
         iol << "max: #{to_n_point_float(t15/total.to_f)*100}%"
     }
+
+    write_pie(arr[0..4],0,1,"w_t#{n}_1")
+    write_map(arr,0,1,"w_t#{n}_2")
 end
 
 (1..5).each do |i|
@@ -226,47 +296,8 @@ end
     sum_org_waiqian(recs[i][0],org,$cities,i)
 end
 
-=begin
-#[{value:5122, name:'1.5L'}, {value:29071, name:'1.6L'}]
-
-str1 = ''
-str2 = ''
-
-(0..v1.length-1).each do |i|
-    str1 += '{value:' + v1[i] + ",name:" + k1[i]  + "},"
-end
-
-(0..v2.length-1).each do |i|
-    str2 += '{value:' + v2[i] + ",name:" + k2[i]  + "},"
-end
-
-data = IO.read('../template/ring.template',:encoding=>"utf-8")
-data.gsub!(/PARAM0/,"[#{k3.join(',')}]")
-data.gsub!(/PARAM1/,"[#{str1}]")
-data.gsub!(/PARAM2/,"[#{str2}]")
 
 
-puts data
-
-IO.write('../../server/public/my_js/hhh.js',data,:encoding=>"utf-8")
 
 
-head = "排量,本地过户量,外迁过户量"
-File.open('csv/排量发布_out.csv', "w",:encoding=>"gbk") { |io|  
-    io << head << "\n"
-    (0...k3.length).each do |i|
-        t = k2.index(k3[i])
-        pp t
-        pp v2
-        a = t ? v2[t] : 0
-        pp t
-        pp i
-        pp k3[i]
-        t = k1.index(k3[i])
-        b = t ? v1[t] : 0 
 
-        io << "#{k3[i][1..-2]},#{a},#{b}\n"
-    end
-}
-
-=end
