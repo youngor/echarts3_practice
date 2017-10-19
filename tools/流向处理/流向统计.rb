@@ -67,13 +67,13 @@ $cities.each do |c|
     q = o+i+l
 
     begin
-        ko = o*100.round/q/100.to_f
+        ko = to_n_point_float(o.to_f/q)
     rescue
         ko = 0
     end
 
     begin
-        kl = l*100.round/q/100.to_f
+        kl = to_n_point_float(l.to_f/q)
     rescue
         kl = 0
     end
@@ -86,8 +86,10 @@ end
 vomax=vo_arr.max
 vlmax=vl_arr.max
 
-File.open('csv/流向统计_out.csv', "w",:encoding=>"gbk") { |io|  
-    io << head << "\n"
+recs = []
+
+File.open('csv/流向统计_out.csv', "w",:encoding=>"gbk") { |iol|  
+    iol << head << "\n"
     $cities.each do |c|
         t = k2.index("'"+c+"'")
         o = (t ? v2[t] : 0).to_i
@@ -121,12 +123,108 @@ File.open('csv/流向统计_out.csv', "w",:encoding=>"gbk") { |io|
         vo = Math.sqrt(ko*o)
         vl = Math.sqrt(kl*l)
 
-#head = "地区,外迁量O,流入量I,本地过户量L,总交易量Q(O+I+L）,外迁率KO（O/Q）,本地过户率KL（L/Q）,外迁值VO(KO*O)的平方根,外迁指数IO=VO/VOmax,本地交易值VL(KL*L)的平方根,本地交易指数IL=VL/Vlmax"
+#head = "地区0,外迁量O1,流入量I2,本地过户量L3,总交易量Q(O+I+L）4,外迁率KO（O/Q）5,本地过户率KL（L/Q）6,外迁值VO(KO*O)的平方根7,外迁指数IO=VO/VOmax8,本地交易值VL(KL*L)的平方根9,本地交易指数IL=VL/Vlmax10"
 
-        io << "#{c},#{o},#{i},#{l},#{q},#{ko*100}%,#{kl*100}%,#{to_n_point_float(vo)},#{to_n_point_float(vo/vomax)},#{to_n_point_float(vl)},#{to_n_point_float(vl/vlmax)}\n"
+        vo = to_n_point_float(vo)
+        io = to_n_point_float(vo/vomax)
+        vl = to_n_point_float(vl)
+        il = to_n_point_float(vl/vlmax)
+
+        iol << "#{c},#{o},#{i},#{l},#{q},#{ko},#{kl},#{vo},#{io},#{vl},#{il}\n"
+        recs << [c,o,i,l,q,ko,kl,vo,io,vl,il]
     end
 }
 
+# "地区 本地过户率KL 本地交易指数IL  本地过户量L** "  => 本地交易TOP50城市
+recs = recs.sort_by { |a| -a[3]  }  #本地过户量L
+
+File.open('csv/本地交易TOP50城市_out.csv', "w",:encoding=>"gbk") { |iol|  
+    iol << "地区,本地过户率KL,本地交易指数IL,本地过户量L*" << "\n"
+    (0...50).each do |i|
+        t = recs[i]
+        iol << "#{t[0]},#{t[6]},#{t[10]},#{t[3]}\n"
+    end
+}
+
+# 地区  外迁率vo 外迁指数io    外迁量o** => 外迁TOP50城市
+
+recs = recs.sort_by { |a| -a[1]  }  #外迁量o**
+
+File.open('csv/外迁TOP50城市_out.csv', "w",:encoding=>"gbk") { |iol|  
+    iol << "地区,外迁率vo,外迁指数io,外迁量o*" << "\n"
+    (0...50).each do |i|
+        t = recs[i]
+        iol << "#{t[0]},#{t[7]},#{t[8]},#{t[1]}\n"
+    end
+}
+
+#五个城市是 recs[0..4]
+#puts recs[0..4].join(',')
+
+
+
+#年份0  季度1  企业2  品牌3  车型4  排量5  原城市6 流向城市7    车龄年8 数量9
+org = []
+File.foreach('csv/原始数据.csv', :encoding=>"gbk") { |iol|  
+    org << iol.split(/,/)
+}
+
+#puts org[1]
+#pp org[1]
+
+def sum(org,org_c,tar_c)
+    #pp "#{org_c}"
+    #pp "#{tar_c}"
+    t = org.select { |e|  e[6] == org_c and e[7] == tar_c}
+    #t = org.select { |e|  pp "#{org_c},#{tar_c},#{e[6]},#{e[7]}",e[6] == org_c and e[7] == tar_c}
+    #pp t
+    s = 0
+    t.each { |e| s+= e[9].to_i }
+    s
+end
+
+ec = Encoding::Converter.new("utf-8", "gbk")
+
+#puts sum(org,ec.convert('北京市'),ec.convert('长沙市'))
+#exit
+
+
+# 流出目标地区  外迁量(**) 集中度(top 15) ==> 外迁TOP1..5
+def sum_org_waiqian(c,org,cities,n)
+    ec = Encoding::Converter.new("utf-8", "gbk")
+
+    arr = []
+    cities.each do |i|
+        #puts i,c
+        next if c == i
+        arr << [i,sum(org,ec.convert(c),ec.convert(i))]
+    end
+
+    arr = arr.sort_by { |e|  -e[1]}
+
+    t15 = 0
+    (0..14).each do |i|
+        t15 += arr[i][1].to_i
+    end
+
+    total = 0
+    (0...arr.length).each do |i|
+        total += arr[i][1].to_i
+    end
+
+    File.open("csv/外迁TOP#{n}_out.csv", "w",:encoding=>"gbk") { |iol|  
+        iol << "#{c}流出目标地区,外迁量o*" << "\n"
+        arr.each do |i|
+            iol << "#{i.join(',')}\n"
+        end
+        iol << "max: #{to_n_point_float(t15/total.to_f)*100}%"
+    }
+end
+
+(1..5).each do |i|
+    puts "processing #{i}...."
+    sum_org_waiqian(recs[i][0],org,$cities,i)
+end
 
 =begin
 #[{value:5122, name:'1.5L'}, {value:29071, name:'1.6L'}]
