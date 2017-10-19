@@ -11,7 +11,7 @@ sum = 0
 #保持N位小数点转化
 
 def to_n_point_float(f,n)
-    ((f * 10^n).round/10^n).to_f
+    sprintf("%.#{n}f", f).to_f
 end
 
 File.foreach("csv/车龄发布.csv",:encoding=>"utf-8") { |line|  
@@ -38,7 +38,7 @@ data.gsub!(/PARAM1/,"[#{v1.join(',')}]")
 
 puts data
 
-IO.write('../../server/public/my_js/hhh.js',data,:encoding=>"utf-8")
+IO.write('../../server/public/my_js/clfb.js',data,:encoding=>"utf-8")
 
 head = "上牌年限,各年份上牌比例"
 File.open('csv/车龄发布_out.csv', "w",:encoding=>"gbk") { |io|  

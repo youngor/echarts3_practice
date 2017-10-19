@@ -62,7 +62,7 @@ data.gsub!(/PARAM2/,"[#{str2}]")
 
 puts data
 
-IO.write('../../server/public/my_js/hhh.js',data,:encoding=>"utf-8")
+IO.write('../../server/public/my_js/plfb.js',data,:encoding=>"utf-8")
 
 
 head = "排量,本地过户量,外迁过户量"
