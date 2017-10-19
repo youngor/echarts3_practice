@@ -66,7 +66,7 @@ IO.write('../../server/public/my_js/hhh.js',data,:encoding=>"utf-8")
 
 
 head = "排量,本地过户量,外迁过户量"
-File.open('csv/排量发布_out.csv', "w") { |io|  
+File.open('csv/排量发布_out.csv', "w",:encoding=>"gbk") { |io|  
     io << head << "\n"
     (0...k3.length).each do |i|
         t = k2.index(k3[i])
@@ -79,6 +79,6 @@ File.open('csv/排量发布_out.csv', "w") { |io|
         t = k1.index(k3[i])
         b = t ? v1[t] : 0 
 
-        io << "#{k3[i]},#{a},#{b}\n"
+        io << "#{k3[i][1..-2]},#{a},#{b}\n"
     end
 }

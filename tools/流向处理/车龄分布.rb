@@ -41,9 +41,9 @@ puts data
 IO.write('../../server/public/my_js/hhh.js',data,:encoding=>"utf-8")
 
 head = "上牌年限,各年份上牌比例"
-File.open('csv/车龄发布_out.csv', "w") { |io|  
+File.open('csv/车龄发布_out.csv', "w",:encoding=>"gbk") { |io|  
     io << head << "\n"
     (0...k.length).each do |i|
-        io << "#{k[i]},#{v1[i]}\n"
+        io << "#{k[i][1..-2]},#{v1[i]}%\n"
     end
 }

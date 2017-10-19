@@ -1,58 +1,45 @@
-//app.title = '嵌套环形图';
+// app.title = '坐标轴刻度与标签对齐';
 
 option = {
     backgroundColor: '#ffffff',
-    animation: false, // save image...
-    legend: {
-        orient: 'vertical',
-        x: 'left',
-        data:  ['2.0L','2.2L','2.3L','2.4L','3.0L','3.5L'] //['1.5L','1.6L','1.8L']
+    color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
     },
-    
-    series: [
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
         {
-            name:'本地过户量',
-            type:'pie',
-            selectedMode: 'single',
-            radius: [0, '30%'],
-
-            label: {
-                normal: {
-                    //formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
-                    position: 'inner',
-                    fontSize: 12
-                }
-            },
-            labelLine: {
-                normal: {
-                    show: false
-                }
-            },
-            
-            data:
-                [{value:15139,name:'2.0L'},{value:8,name:'2.2L'},{value:1650,name:'2.3L'},{value:12923,name:'2.4L'},{value:411,name:'3.0L'},{value:93,name:'3.5L'},] //[{value:5122, name:'1.5L'}, {value:29071, name:'1.6L'}]
-                
-            
-        },
+            type : 'category',
+            data : ['1-2年','2-3年','3-4年','4-5年','5-6年','6-7年','7-8年','8-9年','9-10年','10-11年','11-12年','12-13年','13-14年','14-15年','15年以上'], //[a,b]
+            axisTick: {
+                alignWithLabel: true
+            }
+        }
+    ],
+    yAxis : [
         {
-            name:'外迁过户量',
-            type:'pie',
-            radius: ['45%', '70%'],
-
-            label: {
-                normal: {
-                    //formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
-                    position: 'inner',
-                    fontSize: 16
+            type : 'value',
+            axisLabel : {
+                formatter: function(value) {
+                    return value+"%"; 
                 }
-            },
-            labelLine: {
-                normal: {
-                    show: false
-                }
-            },
-
-            data: [{value:4592,name:'2.0L'},{value:298,name:'2.3L'},{value:4372,name:'2.4L'},{value:131,name:'3.0L'},{value:39,name:'3.5L'},] //[{value:5122, name:'1.5L'}, {value:29071, name:'1.6L'}]
+            }
+        }
+    ],
+    series : [
+        {
+            name:'直接访问',
+            type:'bar',
+            barWidth: '60%',
+            data:[0.4,2.3,2.5,4.1,4.2,6.1,8.8,9.9,11.1,8.3,9.6,9.9,7.6,6.3,8.2]  //[a,b]
         }
     ]
 };
