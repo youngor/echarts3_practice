@@ -19,7 +19,7 @@ option = {
     visualMap: {
         show: false,
         min: 0,
-        max: 43,
+        max: 61,
         inRange: {
             colorLightness: [0, 1]
         }
@@ -32,11 +32,11 @@ option = {
             center: ['50%', '50%'],
             data:[
                 //{value:335, name:'直接访问'}, {value:310, name:'邮件营销'},
-                {value:39,name:'茂名市'},
-{value:19,name:'伊犁哈萨克自治州'},
-{value:13,name:'云浮市'},
+                {value:55,name:'茂名市'},
+{value:20,name:'揭阳市'},
+{value:15,name:'汕头市'},
+{value:12,name:'河源市'},
 {value:12,name:'湛江市'},
-{value:12,name:'汕头市'},
 
             ].sort(function (a, b) { return a.value - b.value; }),
             roseType: 'radius',

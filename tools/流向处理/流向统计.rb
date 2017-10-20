@@ -196,7 +196,7 @@ def write_map(recs,name_col,val_col,file_name)
 
     min = (min * 0.9).round
     max = (max * 1.1).round
-    
+
     data = IO.read('../template/map.template',:encoding=>"utf-8")
     data.gsub!(/PARAM0/,"#{str1}")
     data.gsub!(/PARAM1/,"#{$cities_gis}")
@@ -291,9 +291,9 @@ def sum_org_waiqian(c,org,cities,n)
     write_map(arr,0,1,"w_t#{n}_2")
 end
 
-(1..5).each do |i|
+(0..4).each do |i|
     puts "processing #{i}...."
-    sum_org_waiqian(recs[i][0],org,$cities,i)
+    sum_org_waiqian(recs[i][0],org,$cities,i+1)
 end
 
 
