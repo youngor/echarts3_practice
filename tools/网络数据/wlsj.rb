@@ -12,9 +12,15 @@ $ec_2_utf8 = Encoding::Converter.new("gbk","utf-8")
 recs = read_csv_gbk('csv/in_原始数据.csv',8)
 #pp recs
 
-series = '凯越' #ARGV[1] 
+#series = '凯越' #ARGV[1] 
+pp ARGV
+series = ARGV[0]
+pp series
+#pp to_utf8(series)
+#pp to_gbk(series)
+
 source = $map_4s[series.to_sym] 
-#pp source 
+pp source 
 #gets
 def group_by_col(recs,col,cs_name)
     h = {}
