@@ -2,77 +2,12 @@
 
 require 'rubygems'
 require 'pp'
-require '../流向处理/city'
+require '../utils/city'
 require 'date'
 
-$ec_2_gbk = Encoding::Converter.new("utf-8", "gbk")
-$ec_2_utf8 = Encoding::Converter.new("gbk","utf-8")
-
-
-#首次发布时间 update_date 标准品牌    标准车系    车源发布状态  标价
-
-def read_csv_gbk(file_name,n,sep=',')
-    recs = []
-    File.foreach(file_name,:encoding=>"gbk") { |line|
-        #pp line  
-        a = line.chomp.split(/#{sep}/)
-        #pp a
-        #gets
-
-        bb = []
-        (1..n-1).each do |i|
-            bb[i] = ''
-        end
-        i = 0
-        a.each do |item|
-            bb[i] = a[i]
-            i += 1
-        end
-        recs << bb
-        #pp bb
-        #gets
-        #pp bb
-        #pp recs
-        #exit
-    }
-    #pp recs
-    recs 
-end
 
 recs = read_csv_gbk('csv/in_原始数据.csv',6)[1..-1]
-#puts recs[0].length
-#exit
 
-#保持N位小数点转化
-
-def to_n_point_float(f,n=2)
-    sprintf("%.#{n}f", f).to_f
-end
-
-
-#//['a',20],['b',50],['c',40]
-def write_area(recs,name_col,val_col,file_name)
-
-    name_str = ''
-    val_str = ''
-
-    (0..recs.length-1).each do |i|
-        t = recs[i]
-        #pp t
-        #pp recs
-        name_str += "'" + $ec_2_utf8.convert(t[name_col].to_s)  + "',\n"
-        val_str += "['" + t[name_col].to_s + "'," + $ec_2_utf8.convert(t[val_col].to_s) + "],\n"
-    end
-    
-
-    data = IO.read('../template/area.template',:encoding=>"utf-8")
-    data.gsub!(/PARAM0/,"#{name_str}")
-    data.gsub!(/PARAM1/,"#{val_str}")
-    
-    puts data
-
-    IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
-end
 
 def group_by_col(recs,col,cs_name)
     h = {}

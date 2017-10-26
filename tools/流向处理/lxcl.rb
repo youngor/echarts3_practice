@@ -2,122 +2,13 @@
 
 require 'rubygems'
 require 'pp'
-require '../流向处理/city'
+require '../utils/city'
 require 'date'
 
-$ec_2_gbk = Encoding::Converter.new("utf-8", "gbk")
-$ec_2_utf8 = Encoding::Converter.new("gbk","utf-8")
-
-def to_gbk(str)
-    #Encoding::Converter.new("utf-8", "gbk").convert(str)
-    $ec_2_gbk.convert(str)
-end
-
-def to_utf8(str)
-    #Encoding::Converter.new("gbk","utf-8").convert(str)
-    $ec_2_utf8.convert(str)
-end
 
 #年份 季度  企业  品牌  车型  排量  原城市 流向城市    车龄年 数量
 
-def read_csv_gbk(file_name,n,sep=',')
-    recs = []
-    File.foreach(file_name,:encoding=>"gbk") { |line|
-        #pp line  
-        a = line.chomp.split(/#{sep}/)
-        #pp a
-        #gets
-
-        bb = []
-        (1..n-1).each do |i|
-            bb[i] = ''
-        end
-        i = 0
-        a.each do |item|
-            bb[i] = a[i]
-            i += 1
-        end
-        recs << bb
-        #pp bb
-        #gets
-        #pp bb
-        #pp recs
-        #exit
-    }
-    #pp recs
-    recs 
-end
-
 recs = read_csv_gbk('csv/in_原始数据.csv',10)[1..-1]
-
-#pp recs
-#保持N位小数点转化
-
-def to_n_point_float(f,n=2)
-    sprintf("%.#{n}f", f).to_f
-end
-
-#
-#pie 
-
-
-#//{value:335, name:'直接访问'}, {value:310, name:'邮件营销'},
-def write_pie(recs,name_col,val_col,file_name)
-    str1 = ''
-    min = 0
-    max = 0
-
-    (0..recs.length-1).each do |i|
-        t = recs[i]
-        str1 += '{value:' + t[val_col].to_s + ",name:'" + t[name_col].to_s  + "'},\n"
-        
-        min = t[val_col] if min > t[val_col]
-        max = t[val_col] if max < t[val_col]
-    end
-
-    #puts min,max
-    min = (min * 0.9).round
-    max = (max * 1.1).round
-    #puts min,max
-
-    
-    data = IO.read('../template/pie.template',:encoding=>"utf-8")
-    data.gsub!(/PARAM0/,"#{min}")
-    data.gsub!(/PARAM1/,"#{max}")
-    data.gsub!(/PARAM2/,"#{str1}")
-
-
-    puts data
-
-    IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
-end
-
-#//{name: '海门', value: 9}, {name: '大庆', value: 279}
-def write_map(recs,name_col,val_col,file_name)
-    str1 = ''
-    min = 0
-    max = 0
-
-    (0..recs.length-1).each do |i|
-        t = recs[i]
-        str1 += '{value:' + t[val_col].to_s + ",name:'" + t[name_col].to_s  + "'},\n"
-        min = t[val_col] if min > t[val_col]
-        max = t[val_col] if max < t[val_col]
-    end
-
-    min = (min * 0.9).round
-    max = (max * 1.1).round
-
-    data = IO.read('../template/map.template',:encoding=>"utf-8")
-    data.gsub!(/PARAM0/,"#{str1}")
-    data.gsub!(/PARAM1/,"#{$cities_gis}")
-    data.gsub!(/PARAM2/,"#{min}")
-    data.gsub!(/PARAM3/,"#{max}")
-
-    puts data
-
-    IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
-end
 
 #流向统计_out.csv
 #本地交易TOP50城市_out.csv
@@ -135,21 +26,15 @@ def sum(org,org_c,tar_c)
     s
 end
 
-ec = Encoding::Converter.new("utf-8", "gbk")
-
-#puts sum(org,ec.convert('北京市'),ec.convert('长沙市'))
-#exit
-
 
 # 流出目标地区  外迁量(**) 集中度(top 15) ==> 外迁TOP1..5
 def sum_org_waiqian(c,org,cities,n)
-    ec = Encoding::Converter.new("utf-8", "gbk")
 
     arr = []
     cities.each do |i|
         #puts i,c
         next if c == i
-        arr << [i,sum(org,ec.convert(c),ec.convert(i))]
+        arr << [i,sum(org,to_gbk(c),to_gbk(i))]
     end
 
     arr = arr.sort_by { |e|  -e[1]}
@@ -172,7 +57,7 @@ def sum_org_waiqian(c,org,cities,n)
         iol << "max: #{to_n_point_float(t15/total.to_f)*100}%"
     }
 
-    write_pie(arr[0..4],0,1,"w_t#{n}_1")
+    write_pie(arr[0..4],0,1,"w_t#{n}_1",true)
     write_map(arr,0,1,"w_t#{n}_2")
 end
 

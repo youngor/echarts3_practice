@@ -774,3 +774,131 @@ $map_4s = {
 '皇冠':'一汽丰田',
 '长安之星':''
 }
+
+def read_csv_gbk(file_name,n,sep=',')
+    recs = []
+    File.foreach(file_name,:encoding=>"gbk") { |line|
+        #pp line  
+        a = line.chomp.split(/#{sep}/)
+        #pp a
+        #gets
+
+        bb = []
+        (1..n-1).each do |i|
+            bb[i] = ''
+        end
+        i = 0
+        a.each do |item|
+            bb[i] = a[i]
+            i += 1
+        end
+        recs << bb
+    }
+    #pp recs
+    recs 
+end
+
+#保持N位小数点转化
+
+def to_n_point_float(f,n=2)
+    sprintf("%.#{n}f", f).to_f
+end
+
+#//{value:335, name:'直接访问'}, {value:310, name:'邮件营销'},
+def write_pie(recs,name_col,val_col,file_name,utf8 = false)
+
+    str1 = ''
+    min = 0
+    max = 0
+
+    (0..recs.length-1).each do |i|
+        t = recs[i]
+        unless utf8
+            str1 += '{value:' + t[val_col].to_s + ",name:'" + $ec_2_utf8.convert(t[name_col].to_s)  + "'},\n"
+        else
+            str1 += '{value:' + t[val_col].to_s + ",name:'" + t[name_col].to_s  + "'},\n"
+        end
+        min = t[val_col] if min > t[val_col]
+        max = t[val_col] if max < t[val_col]
+    end
+
+    #puts min,max
+    min = (min * 0.9).round
+    max = (max * 1.1).round
+    #puts min,max
+
+    
+    data = IO.read('../template/pie.template',:encoding=>"utf-8")
+    data.gsub!(/PARAM0/,"#{min}")
+    data.gsub!(/PARAM1/,"#{max}")
+    data.gsub!(/PARAM2/,"#{str1}")
+
+
+    puts data
+
+    IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
+end
+
+#//['a',20],['b',50],['c',40]
+def write_area(recs,name_col,val_col,file_name)
+
+    name_str = ''
+    val_str = ''
+
+    (0..recs.length-1).each do |i|
+        t = recs[i]
+        #pp t
+        #pp recs
+        name_str += "'" + $ec_2_utf8.convert(t[name_col].to_s)  + "',\n"
+        val_str += "['" + t[name_col].to_s + "'," + $ec_2_utf8.convert(t[val_col].to_s) + "],\n"
+    end
+    
+
+    data = IO.read('../template/area.template',:encoding=>"utf-8")
+    data.gsub!(/PARAM0/,"#{name_str}")
+    data.gsub!(/PARAM1/,"#{val_str}")
+    
+    puts data
+
+    IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
+end
+
+#//{name: '海门', value: 9}, {name: '大庆', value: 279}
+def write_map(recs,name_col,val_col,file_name)
+    str1 = ''
+    min = 0
+    max = 0
+
+    (0..recs.length-1).each do |i|
+        t = recs[i]
+        str1 += '{value:' + t[val_col].to_s + ",name:'" + t[name_col].to_s  + "'},\n"
+        min = t[val_col] if min > t[val_col]
+        max = t[val_col] if max < t[val_col]
+    end
+
+    min = (min * 0.9).round
+    max = (max * 1.1).round
+
+    data = IO.read('../template/map.template',:encoding=>"utf-8")
+    data.gsub!(/PARAM0/,"#{str1}")
+    data.gsub!(/PARAM1/,"#{$cities_gis}")
+    data.gsub!(/PARAM2/,"#{min}")
+    data.gsub!(/PARAM3/,"#{max}")
+
+    puts data
+
+    IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
+end
+
+$ec_2_gbk = Encoding::Converter.new("utf-8", "gbk")
+$ec_2_utf8 = Encoding::Converter.new("gbk","utf-8")
+
+def to_gbk(str)
+    #Encoding::Converter.new("utf-8", "gbk").convert(str)
+    $ec_2_gbk.convert(str)
+end
+
+def to_utf8(str)
+    #Encoding::Converter.new("gbk","utf-8").convert(str)
+    $ec_2_utf8.convert(str)
+end
