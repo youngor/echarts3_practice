@@ -16,7 +16,10 @@ option = {
     xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: PARAM0 //['a','b','c']
+        data: [
+            PARAM0
+        ]
+        //['a','b','c']
     },
     yAxis: {
         type: 'value',
@@ -47,7 +50,7 @@ option = {
                 }
             },
             data: [
-                PAMAM1 //['a',20],['b',50],['c',40],
+                PARAM1 //['a',20],['b',50],['c',40],
                 ]
         }
     ]
