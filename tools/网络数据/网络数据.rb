@@ -174,6 +174,7 @@ end
 #http://127.0.0.1:4567/wl_4s.html
 #http://127.0.0.1:4567/wl_dlcs.html
 #http://127.0.0.1:4567/wl_dstop100.html
+#http://127.0.0.1:4567/wl_gyzs.html
 
 get_excel_and_chart(recs,-2,source,'csv/4s_out.csv','wl_4s') 
 get_excel_and_chart(recs,-2,'网络媒体','csv/独立车商_out.csv','wl_dlcs') 
