@@ -61,7 +61,7 @@ h1 = dates.map { |d|
         end
     }
     t = 1 if t == 0
-    avg = to_n_point_float(avg * 1.0 / t) + 1
+    avg = to_n_point_float(avg * 1.0 / t + 1)
     printf "\b\b\b%d",ind
     #pp d,avg,t
     ind +=1
