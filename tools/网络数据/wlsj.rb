@@ -49,18 +49,18 @@ def get_excel_and_chart(recs,col,source,file_name,js_file)
     h = group_by_col(recs_4s,-3,cs_name)
     h = h.sort_by {|k,v| -v }
 
-    pp h
+    #pp h
     cs_tol = 0
 
     h.each { |k,v|  cs_tol += v }
-    pp cs_tol
+    #pp cs_tol
 
     t10 = 0
     (0...10).each do |i|
         t10 += h[i][1]    
     end
 
-    pp t10p =  to_n_point_float(t10*100.0/cs_tol,2)
+    t10p =  to_n_point_float(t10*100.0/cs_tol,2)
     
     #write out csv...
     File.open(file_name, "w",:encoding=>"gbk") { |iol|  
@@ -129,7 +129,7 @@ dates.each do |d|
     end
 end
 
-pp h
+#pp h
 #write out csv...
 File.open('csv/电商top100_out.csv', "w",:encoding=>"gbk") { |iol|  
     iol << "首次发布时间,C2C电商平台在前100个城市每日发布的车源总量*" << "\n"
@@ -170,7 +170,7 @@ def get_avg(h,i,n=30)
             v += h[k][1]
         end
     end
-    pp v,num
+ #   pp v,num
     to_n_point_float(v*1.0/num,2)
 end
 
