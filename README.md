@@ -44,3 +44,10 @@ template need to be considered ...
 4. check C:\Users\williamchen\Documents\GitHub\echarts3_practice\server\public\hhh.png
 
 
++#####
++ALL:
++in windows, git clone;
++cd tools
++pro.bat 
++Done!
++####
