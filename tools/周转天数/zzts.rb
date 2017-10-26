@@ -39,7 +39,7 @@ def read_csv_gbk(file_name,n,sep=',')
     recs 
 end
 
-recs = read_csv_gbk('csv/原始数据.csv',6)[1..-1]
+recs = read_csv_gbk('csv/in_原始数据.csv',6)[1..-1]
 #puts recs[0].length
 #exit
 
@@ -126,7 +126,7 @@ h1 = dates.map { |d|
         end
     }
     t = 1 if t == 0
-    avg = avg * 1.0 / t + 1
+    avg = to_n_point_float(avg * 1.0 / t) + 1
     printf "\b\b\b%d",ind
     #pp d,avg,t
     ind +=1
@@ -141,7 +141,7 @@ File.open("csv/车系周转天数表_out.csv", "w",:encoding=>"gbk") { |iol|
 }
 
 #generate area...
-write_area(h1[0..-2],0,1,'zzts_cxzzts')
+write_area(h1[0..-2-29],0,1,'zzts_cxzzts')
 
 ind = 0
 ########################车系价格波动表_out.csv
@@ -176,7 +176,7 @@ File.open("csv/车系价格波动表_out.csv", "w",:encoding=>"gbk") { |iol|
 }
 
 #generate area...
-write_area(h1[0..-2],0,1,'zzts_jgbd')
+write_area(h1[0..-2-29],0,1,'zzts_jgbd')
 
 #http://127.0.0.1:4567/zzts_cxzzts.html
 #http://127.0.0.1:4567/zzts_jgbd.html

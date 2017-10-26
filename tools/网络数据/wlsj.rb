@@ -37,7 +37,7 @@ def read_csv_gbk(file_name,n,sep=',')
     recs 
 end
 
-recs = read_csv_gbk('csv/原始数据.csv',8)
+recs = read_csv_gbk('csv/in_原始数据.csv',8)
 #puts recs[0].length
 #exit
 

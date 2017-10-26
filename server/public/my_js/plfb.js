@@ -52,7 +52,7 @@ option = {
                 }
             },
 
-            data: [{value:4592,name:'2.0L'},{value:298,name:'2.3L'},{value:4372,name:'2.4L'},{value:131,name:'3.0L'},{value:39,name:'3.5L'},] //[{value:5122, name:'1.5L'}, {value:29071, name:'1.6L'}]
+            data: [{value:4592,name:'2.0L'},{value:0,name:'2.2L'},{value:298,name:'2.3L'},{value:4372,name:'2.4L'},{value:131,name:'3.0L'},{value:39,name:'3.5L'},] //[{value:5122, name:'1.5L'}, {value:29071, name:'1.6L'}]
         }
     ]
 };
