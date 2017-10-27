@@ -199,7 +199,7 @@ File.open('csv/供应指数_out.csv', "w",:encoding=>"gbk") { |iol|
 }
 
 h = h.to_a.sort!{|a| Date.parse(a[0])}
-write_area(h[0..max],0,1,'wl_gyzs')
+write_area(h[0..-1],0,1,'wl_gyzs')
 
 #############价格波动！
 ## TODO,read from db or tianyan?

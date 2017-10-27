@@ -10,7 +10,7 @@ option = {
     },
     title: {
         left: 'center',
-        text: '面积图',
+        text: '',
     },
     
     xAxis: {
