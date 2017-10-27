@@ -105,3 +105,17 @@ server/public/my_js/wl_4s.js
 server/public/my_js/wl_dlcs.js
 server/public/my_js/wl_dstop100.js
 server/public/my_js/wl_gyzs.js
+server/public/my_js/zzts_jgbd.js
+tools/output/宝马5系/周转天数/in_原始数据.csv
+tools/output/宝马5系/周转天数/zzts_cxzzts.png
+tools/output/宝马5系/周转天数/zzts_jgbd.png
+tools/output/宝马5系/周转天数/车源周转天数表_out.csv
+tools/output/宝马5系/周转天数/车系价格波动表_out.csv
+tools/output/宝马5系/周转天数/车系周转天数表_out.csv
+tools/output/宝马5系/流向处理/bd_top50.png
+tools/output/宝马5系/流向处理/clfb.png
+tools/output/宝马5系/流向处理/in_原始数据.csv
+*.png
+tools/output/宝马5系/流向处理/外迁TOP1_out.csv
+tools/output/*
+server/public/my_js/*
