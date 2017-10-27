@@ -7,7 +7,11 @@ require 'date'
 
 
 recs = read_csv_gbk('csv/in_原始数据.csv',6)[1..-1]
-
+recs.map! { |r|
+    [r[0],r[1],r[2],r[3],r[4],r[5].to_f]
+}
+#pp recs
+#exit
 
 def group_by_col(recs,col,cs_name)
     h = {}
@@ -75,8 +79,10 @@ File.open("csv/车系周转天数表_out.csv", "w",:encoding=>"gbk") { |iol|
     end
 }
 
+h1.sort!{|a| Date.parse(a[0])}
+
 #generate area...
-write_area(h1[0..-2-29],0,1,'zzts_cxzzts')
+write_area(h1[0..-2],0,1,'zzts_cxzzts')
 
 ind = 0
 ########################车系价格波动表_out.csv
@@ -110,8 +116,9 @@ File.open("csv/车系价格波动表_out.csv", "w",:encoding=>"gbk") { |iol|
     end
 }
 
+h1.sort!{|a| Date.parse(a[0])}
 #generate area...
-write_area(h1[0..-2-29],0,1,'zzts_jgbd')
+write_area(h1[0..-2],0,1,'zzts_jgbd')
 
 #http://127.0.0.1:4567/zzts_cxzzts.html
 #http://127.0.0.1:4567/zzts_jgbd.html
