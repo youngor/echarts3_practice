@@ -46,6 +46,7 @@ template need to be considered ...
 
 #####
 ALL:
+.3 cd /data/scripts/report/shell sh -x all.sh then copy csv to csv...
 in windows, git clone;
 cd tools
 pro.bat 凯越

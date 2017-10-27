@@ -82,3 +82,9 @@ server/public/my_js/zzts_cxzzts.js
 server/public/my_js/zzts_cxzzts.js
 server/public/my_js/zzts_cxzzts.js
 tools/output/'凯越'/周转天数/in_原始数据.csv
+tools/周转天数/sql/init.sql
+tools/网络数据/sql/init.sql
+server/public/my_js/bd_top50.js
+tools/周转天数/csv/in_原始数据.csv
+tools/流向处理/csv/in_原始数据.csv
+tools/网络数据/csv/in_原始数据.csv
