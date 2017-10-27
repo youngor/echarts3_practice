@@ -16,12 +16,12 @@ var convertData = function (data) {
 
 option = {
     title: {
-        text: '本地交易量热力图',
-        subtext: '本地交易量热力图',
-        sublink: 'http://www.pm25.in',
+        text: '',
+        subtext: '',
+        sublink: '',
         left: 'center',
         textStyle: {
-            color: '#fff'
+            color: '#00'
         }
     },
 
@@ -36,7 +36,7 @@ option = {
             color: ['#d94e5d','#eac736','#50a3ba'].reverse()
         },
         textStyle: {
-            color: '#fff'
+            color: '#00'
         }
     },
     geo: {

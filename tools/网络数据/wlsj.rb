@@ -145,6 +145,7 @@ File.open('csv/电商top100_out.csv', "w",:encoding=>"gbk") { |iol|
 }
 
 #generate area graph...
+h.sort!{|a| Date.parse(a[0])}
 write_area(h.to_a,0,1,'wl_dstop100')
 
 # 供应指数
@@ -197,7 +198,7 @@ File.open('csv/供应指数_out.csv', "w",:encoding=>"gbk") { |iol|
     end
 }
 
-
+h.sort!{|a| Date.parse(a[0])}
 write_area(h[0..max],0,1,'wl_gyzs')
 
 #############价格波动！

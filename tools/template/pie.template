@@ -3,7 +3,7 @@ option = {
     animation: false, // save image...
 
     title: {
-        text: 'Customized Pie',
+        text: '',
         left: 'center',
         top: 20,
         textStyle: {

@@ -20,7 +20,8 @@ option = {
                 normal: {
                     //formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
                     position: 'inner',
-                    fontSize: 12
+                    //fontSize: 12
+                    fontSize: 0.00001
                 }
             },
             labelLine: {
@@ -43,7 +44,8 @@ option = {
                 normal: {
                     //formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
                     position: 'inner',
-                    fontSize: 16
+                    //fontSize: 16
+                    fontSize: 0.00001
                 }
             },
             labelLine: {
