@@ -94,7 +94,7 @@ get_excel_and_chart(recs,-2,'网络媒体','csv/独立车商_out.csv','wl_dlcs')
 
 #'瓜子网' '人人车网'
 
-recs_4s = recs.select { |e|  $ec_2_utf8.convert(e[-2]) == '瓜子网' || $ec_2_utf8.convert(e[-2]) == '人人车网' }
+recs_4s = recs.select { |e|  $ec_2_utf8.convert(e[-2]).index('瓜子') || $ec_2_utf8.convert(e[-2]).index('人人车') }
 
 cs_name = []
 
@@ -155,7 +155,7 @@ dates.each do |d|
     print "."
     recs.each do |v|
         #pp v
-        if v[1] == d && v[-1] == '3'  
+        if v[1] == d && v[-1] == '3'  #属性3
             h[d] += 1 
             #puts "--",d,v[1],v[-1]
         end
@@ -182,14 +182,16 @@ def get_avg(h,i,n=30)
 end
 
 max = 0
+t = []
 #write out csv...
 File.open('csv/供应指数_out.csv', "w",:encoding=>"gbk") { |iol|  
     iol << "日期,30天日均发布量*,成分车商每日发布量" << "\n"
     (0...h.length).each do |i|
         #pp h[i]
-        if Date.parse(h[0][0]) - Date.parse(h[i][0]) <= 60
+        if Date.parse(h[0][0]) - Date.parse(h[i][0]) <= 90
             iol << "#{h[i][0]},#{get_avg(h,i)},#{h[i][1]}\n"
             max = i
+            t << [h[i][0],get_avg(h,i)]
         else
             iol << "#{h[i][0]},,#{h[i][1]}\n"
         end
@@ -198,8 +200,8 @@ File.open('csv/供应指数_out.csv', "w",:encoding=>"gbk") { |iol|
     end
 }
 
-h = h.to_a.sort!{|a| Date.parse(a[0])}
-write_area(h[0..-1],0,1,'wl_gyzs')
+t = t.to_a.sort!{|a| Date.parse(a[0])}
+write_area(t[0..max],0,1,'wl_gyzs')
 
 #############价格波动！
 ## TODO,read from db or tianyan?
