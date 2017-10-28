@@ -37,7 +37,13 @@ end
 
 def get_excel_and_chart(recs,col,source,file_name,js_file)
 
-    recs_4s = recs.select { |e|  $ec_2_utf8.convert(e[col]) == source } 
+    recs_4s = []
+
+    unless source.class == [].class
+        recs_4s = recs.select { |e|  $ec_2_utf8.convert(e[col]) == source } 
+    else
+        recs_4s = recs.select { |e|  source.index($ec_2_utf8.convert(e[col])) }
+    end
 
     #pp recs_4s
 
@@ -89,12 +95,17 @@ end
 #http://127.0.0.1:4567/wl_dstop100.html
 #http://127.0.0.1:4567/wl_gyzs.html
 
-get_excel_and_chart(recs,-2,source,'csv/4s_out.csv','wl_4s') 
-get_excel_and_chart(recs,-2,'网络媒体','csv/独立车商_out.csv','wl_dlcs') 
+recs_3m = recs[1..-1].select { |e|  Date.parse(recs[1][1]) - Date.parse(e[1]) <= 90}  #d第一行的时间
+
+get_excel_and_chart(recs_3m,-2,source,'csv/4s_out.csv','wl_4s') 
+
+recs_3m_1 = recs_3m.select { |e|  e[-1] == '3'}  #d第一行的时间
+
+get_excel_and_chart(recs_3m_1,-2,['网络媒体','车王','澳康达','捷和'],'csv/独立车商_out.csv','wl_dlcs') 
 
 #'瓜子网' '人人车网'
 
-recs_4s = recs.select { |e|  $ec_2_utf8.convert(e[-2]).index('瓜子') || $ec_2_utf8.convert(e[-2]).index('人人车') }
+recs_4s = recs_3m.select { |e|  $ec_2_utf8.convert(e[-2]).index('瓜子') || $ec_2_utf8.convert(e[-2]).index('人人车') }
 
 cs_name = []
 
@@ -146,7 +157,7 @@ File.open('csv/电商top100_out.csv', "w",:encoding=>"gbk") { |iol|
 
 #generate area graph...
 h = h.to_a.sort!{|a| Date.parse(a[0])}
-write_area(h,0,1,'wl_dstop100')
+write_area(h[30..-1],0,1,'wl_dstop100')
 
 # 供应指数
 h = {}
