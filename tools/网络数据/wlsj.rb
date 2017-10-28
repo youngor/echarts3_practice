@@ -95,7 +95,19 @@ end
 #http://127.0.0.1:4567/wl_dstop100.html
 #http://127.0.0.1:4567/wl_gyzs.html
 
-recs_3m = recs[1..-1].select { |e|  Date.parse(recs[1][1]) - Date.parse(e[1]) <= 90}  #d第一行的时间
+ind = 0
+recs_3m = recs[1..-1].select { |e|  
+    #pp recs[1][1],e[1]
+    ind += 1
+    begin
+        Date.parse(recs[1][1]) - Date.parse(e[1]) <= 90
+    rescue
+        pp recs[1][1],e[1],ind
+        puts "###-----------------################"
+        STDIN.gets
+        exit
+    end
+}  #d第一行的时间
 
 get_excel_and_chart(recs_3m,-2,source,'csv/4s_out.csv','wl_4s') 
 

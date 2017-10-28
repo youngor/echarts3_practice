@@ -27,8 +27,18 @@ def group_by_col(recs,col,cs_name)
 end
 
 #车源周转天数表_out.csv
-
-h = recs.map { |e|  [e[1],(Date.parse(e[1])-Date.parse(e[0])).to_i]}
+ind = 0
+h = recs.map { |e| 
+    begin
+        ind += 1
+        [e[1],(Date.parse(e[1])-Date.parse(e[0])).to_i]
+    rescue
+        pp e[0],e[1],ind
+        puts "###-----------------################"
+        STDIN.gets
+        exit 
+    end
+}
 #pp h
 h = h.sort { |a,b|    Date.parse(b[0]) <=> Date.parse(a[0]) }
 

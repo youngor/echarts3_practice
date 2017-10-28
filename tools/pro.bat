@@ -1,6 +1,10 @@
 chcp 65001
 
-rem set cx1=凯越
+copy /A /V /Y c:\temp\周转天数.csv .\周转天数\csv\in_原始数据.csv
+copy /A /V /Y c:\temp\网络数据.csv .\网络数据\csv\in_原始数据.csv
+copy /A /V /Y c:\temp\流向数据.csv .\流向处理\csv\in_原始数据.csv
+
+rem set cx1=凯越 宝马5系 奔驰C级
 set cx1=%1
 cd 流向处理
  ruby lxcl.rb

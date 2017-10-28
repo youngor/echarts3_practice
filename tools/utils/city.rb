@@ -776,26 +776,41 @@ $map_4s = {
 }
 
 def read_csv_gbk(file_name,n,sep=',')
-    recs = []
-    File.foreach(file_name,:encoding=>"gbk") { |line|
-        #pp line  
-        a = line.chomp.split(/#{sep}/)
-        #pp a
-        #gets
+    num = 0
+    err = 0
+    begin
+        recs = []
+        File.foreach(file_name,:encoding=>"gbk") { |line|
+            #pp line  
+            a = line.chomp.split(/#{sep}/)
+            #pp a if num > 16840
+            #gets
 
-        bb = []
-        (1..n-1).each do |i|
-            bb[i] = ''
-        end
-        i = 0
-        a.each do |item|
-            bb[i] = a[i]
-            i += 1
-        end
-        recs << bb
-    }
-    #pp recs
-    recs 
+            bb = []
+            (0..n-1).each do |i|
+                bb[i] = ''
+            end
+            i = 0
+            a.each do |item|
+                bb[i] = a[i]
+                i += 1
+            end
+
+            if a.size < n 
+                pp a
+                err += 1
+                next
+            end
+            num += 1
+            recs << bb
+        }
+        #pp recs
+        puts "read #{num} records, error #{err} records!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        sleep 5
+        recs
+    rescue  => ex
+        puts puts "#{ex.backtrace}: #{ex.message} (#{ex.class})"
+    end 
 end
 
 #保持N位小数点转化

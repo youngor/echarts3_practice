@@ -54,7 +54,7 @@ def sum_org_waiqian(c,org,cities,n)
         arr.each do |i|
             iol << "#{i.join(',')}\n"
         end
-        iol << "max: #{to_n_point_float(t15/total.to_f)*100}%"
+        iol << "max,#{to_n_point_float(t15/total.to_f)*100}%"
     }
 
     write_pie(arr[0..4],0,1,"w_t#{n}_1",true)
@@ -278,10 +278,19 @@ def clfb(recs_org)
     head = "上牌年限,各年份上牌比例"
     File.open('csv/车龄发布_out.csv', "w",:encoding=>"gbk") { |io|  
         io << head << "\n"
+        str = ''
+        max = 0
         (0...k.length).each do |i|
             io << "#{k[i][1..-2]},#{v1[i]}%\n"
+            if v1[i].to_f > max
+                str = "#{k[i][1..-2]},#{v1[i]}%\n"
+                max =  v1[i].to_f
+            end
         end
+
+        io << "max,#{str}"
     }
+
 end
 
 clfb(recs)
