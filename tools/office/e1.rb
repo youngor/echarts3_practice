@@ -41,6 +41,30 @@ end
 #excel
 #word
 
+def replace_doc(doc, find, repl)
+    begin
+        word = WIN32OLE.new('Word.Application')
+        word.Visible = true
+        doc = word.Documents.Open(doc)
+
+        word.Selection.HomeKey(unit=6)
+        finder = word.Selection.Find
+        finder.Text = "[#{find}]"
+
+        while word.Selection.Find.Execute
+            word.Selection.TypeText(text=repl)
+        end
+
+        doc.SaveAs(doc)
+        doc.Close
+    rescue Exception => e
+        puts e.message
+        puts "Unable to edit file."
+    end
+    #doc.sentences.each{ |x| @content = @content + x.text }
+
+end
+
 
 
 def gen_word_replace
@@ -49,6 +73,7 @@ def gen_word_replace
     word = WIN32OLE.new('Word.Application')
     word.visible = true
     old_doc = word.Documents.Open(file) 
+
     {
         '凯越' => '奔驰',
         'date' => Date.today.strftime('%B %d, %Y'),
