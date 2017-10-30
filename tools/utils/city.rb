@@ -937,6 +937,32 @@ def write_map3(recs,name_col,val_col,file_name,from_city,color1='#f4e925')
     IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
 end
 
+#////[0.64,1,947,'北京'],
+def write_buble(recs,name_col,val_col_arr,file_name)
+    str1 = ''
+    min = 0
+    max = 0
+
+    (0..recs.length-1).each do |i|
+        t = recs[i]
+        #str1 += "[{name:\'#{from_city}\'},{name:'" + t[name_col].to_s  + "',value:" + t[val_col].to_s + "}],\n"
+        str1 += "[#{t[val_col_arr[0]].to_s},#{t[val_col_arr[1]].to_s},#{t[val_col_arr[2]].to_s},\'#{t[name_col].to_s}\'],"
+        #min = t[val_col] if min > t[val_col]
+        #max = t[val_col] if max < t[val_col]
+    end
+
+    min = (min * 0.9).round
+    max = (max * 1.1).round
+
+    data = IO.read('../template/buble.template',:encoding=>"utf-8")
+    data.gsub!(/PARAM0/,"#{str1}")
+    #data.gsub!(/PARAM1/,"#{$cities_gis}")
+    #data.gsub!(/PARAM2/,color1)
+
+    puts data
+
+    IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
+end
 $ec_2_gbk = Encoding::Converter.new("utf-8", "gbk")
 $ec_2_utf8 = Encoding::Converter.new("gbk","utf-8")
 

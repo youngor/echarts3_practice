@@ -197,16 +197,19 @@ def lxtj(recs_org)
     # "地区 本地过户率KL 本地交易指数IL  本地过户量L** "  => 本地交易TOP50城市
     recs = recs.sort_by { |a| -a[3]  }  #本地过户量L
 
+    ttt = []
     File.open('csv/本地交易TOP50城市_out.csv', "w",:encoding=>"gbk") { |iol|  
         iol << "地区,本地过户率KL,本地交易指数IL,本地过户量L*" << "\n"
         (0...50).each do |i|
             t = recs[i]
+            ttt << [t[0],t[6],t[10],t[3]]
             iol << "#{t[0]},#{t[6]},#{t[10]},#{t[3]}\n"
         end
     }
 
 
-    write_map(recs,0,3,'bd_top50')
+    #write_map(recs,0,3,'bd_top50')
+    write_buble(ttt,0,[1,2,3],'bd_top50')
 
 
     # 地区  外迁率vo 外迁指数io    外迁量o** => 外迁TOP50城市
