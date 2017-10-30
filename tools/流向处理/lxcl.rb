@@ -57,8 +57,8 @@ def sum_org_waiqian(c,org,cities,n)
         iol << "max,#{to_n_point_float(t15/total.to_f)*100}%"
     }
 
-    write_pie(arr[0..4],0,1,"w_t#{n}_1",true,$color[n])
-    write_map3(arr,0,1,"w_t#{n}_2",c,$color[n])
+    write_pie(arr[0..4],0,1,"w_t#{n}_2",true,$color[n])
+    write_map3(arr,0,1,"w_t#{n}_1",c,$color[n])
 end
 
 

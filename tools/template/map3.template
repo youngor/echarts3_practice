@@ -136,7 +136,7 @@ option = {
         itemStyle: {
             normal: {
                 areaColor: '#fff',
-                borderColor: '#999999'     
+                borderColor: '#111'     
             },
             emphasis: {
                 areaColor: '#fff'
