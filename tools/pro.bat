@@ -1,3 +1,4 @@
+@echo ON
 chcp 65001
 
 copy /A /V /Y c:\temp\周转天数.csv .\周转天数\csv\in_原始数据.csv
@@ -15,7 +16,7 @@ ruby wlsj.rb %cx1%
 rem pause
 
 cd ..\周转天数
-ruby zzts.rb
+rem ruby zzts.rb
 
 cd ..\..\client
 ruby client_test.rb

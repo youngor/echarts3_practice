@@ -5,7 +5,7 @@ option = {
     title: {
         text: '',
         left: 'center',
-        top: 20,
+        top: 0,
         textStyle: {
             color: '#ccc'
         }
@@ -21,14 +21,14 @@ option = {
         min: PARAM0,
         max: PARAM1,
         inRange: {
-            colorLightness: [0, 1]
+            colorLightness: [0, 0.8]
         }
     },
     series : [
         {
-            name:'访问来源',
+            name:'',
             type:'pie',
-            radius : '55%',
+            radius : '85%',
             center: ['50%', '50%'],
             data:[
                 //{value:335, name:'直接访问'}, {value:310, name:'邮件营销'},
@@ -38,7 +38,7 @@ option = {
             label: {
                 normal: {
                     textStyle: {
-                        color: 'rgba(0, 0, 255, 1)'
+                        color: 'rgba(0, 0, 0, 0)'
                     }
                 },
                 //fontSize:260,
@@ -46,7 +46,7 @@ option = {
             labelLine: {
                 normal: {
                     lineStyle: {
-                        color: 'rgba(0, 0, 255, 0.3)'
+                        color: 'rgba(255, 255, 255, 0.3)'
                     },
                     smooth: 0.2,
                     length: 10,
@@ -55,9 +55,9 @@ option = {
             },
             itemStyle: {
                 normal: {
-                    color: '#c23531',
+                    color:  'PARAM3',//'#c23531',
                     shadowBlur: 200,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    shadowColor: 'rgba(0, 0, 0, 0)'
                 }
             },
 

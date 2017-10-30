@@ -819,8 +819,12 @@ def to_n_point_float(f,n=2)
     sprintf("%.#{n}f", f).to_f
 end
 
+#图形颜色(#e1ad21土灰)(#576b7c蓝灰)(#e68c60橙灰)( #25b96e绿灰)( #e64c60红灰)
+
+$color = [
+'#c23531','#e1ad21','#576b7c','#e68c60','#25b96e','#e64c60']
 #//{value:335, name:'直接访问'}, {value:310, name:'邮件营销'},
-def write_pie(recs,name_col,val_col,file_name,utf8 = false)
+def write_pie(recs,name_col,val_col,file_name,utf8 = false,color1='#c23531')
 
     str1 = ''
     min = 0
@@ -847,6 +851,7 @@ def write_pie(recs,name_col,val_col,file_name,utf8 = false)
     data.gsub!(/PARAM0/,"#{min}")
     data.gsub!(/PARAM1/,"#{max}")
     data.gsub!(/PARAM2/,"#{str1}")
+    data.gsub!(/PARAM3/,color1)
 
 
     puts data
@@ -879,7 +884,7 @@ def write_area(recs,name_col,val_col,file_name)
 end
 
 #//{name: '海门', value: 9}, {name: '大庆', value: 279}
-def write_map(recs,name_col,val_col,file_name)
+def write_map(recs,name_col,val_col,file_name,color1='#f4e925')
     str1 = ''
     min = 0
     max = 0
@@ -899,6 +904,33 @@ def write_map(recs,name_col,val_col,file_name)
     data.gsub!(/PARAM1/,"#{$cities_gis}")
     data.gsub!(/PARAM2/,"#{min}")
     data.gsub!(/PARAM3/,"#{max}")
+    data.gsub!(/PARAM4/,color1)
+
+    puts data
+
+    IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
+end
+
+#////[{name:'北京'}, {name:'上海',value:95}],
+def write_map3(recs,name_col,val_col,file_name,from_city,color1='#f4e925')
+    str1 = ''
+    min = 0
+    max = 0
+
+    (0..[recs.length-1,19].max).each do |i|
+        t = recs[i]
+        str1 += "[{name:\'#{from_city}\'},{name:'" + t[name_col].to_s  + "',value:" + t[val_col].to_s + "}],\n"
+        min = t[val_col] if min > t[val_col]
+        max = t[val_col] if max < t[val_col]
+    end
+
+    min = (min * 0.9).round
+    max = (max * 1.1).round
+
+    data = IO.read('../template/map3.template',:encoding=>"utf-8")
+    data.gsub!(/PARAM0/,"#{str1}")
+    data.gsub!(/PARAM1/,"#{$cities_gis}")
+    data.gsub!(/PARAM2/,color1)
 
     puts data
 
