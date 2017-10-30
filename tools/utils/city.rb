@@ -917,7 +917,7 @@ def write_map3(recs,name_col,val_col,file_name,from_city,color1='#f4e925')
     min = 0
     max = 0
 
-    (0..[recs.length-1,19].max).each do |i|
+    (0..[recs.length-1,50].min).each do |i|
         t = recs[i]
         str1 += "[{name:\'#{from_city}\'},{name:'" + t[name_col].to_s  + "',value:" + t[val_col].to_s + "}],\n"
         min = t[val_col] if min > t[val_col]

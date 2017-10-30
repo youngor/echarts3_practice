@@ -16,7 +16,7 @@ ruby wlsj.rb %cx1%
 rem pause
 
 cd ..\周转天数
-rem ruby zzts.rb
+ ruby zzts.rb
 
 cd ..\..\client
 ruby client_test.rb

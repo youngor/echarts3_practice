@@ -86,7 +86,7 @@ def get_excel_and_chart(recs,col,source,file_name,js_file)
 
     #generate pie...
 
-    write_pie(h[0..5],0,1,js_file)
+    write_pie(h[0..4],0,1,js_file)
 
 end
 
