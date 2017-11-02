@@ -1010,3 +1010,11 @@ end
 def to_hex(i)
     i.to_s(16)
 end
+
+def change_str(num)
+  str = num.to_s
+  nil while str.gsub!(/(.*\d)(\d\d\d)/, '\1,\2')
+  return str
+end
+#s = change_str(1243245)
+#puts s

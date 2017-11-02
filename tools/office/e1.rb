@@ -128,9 +128,9 @@ def gen_word_replace(series,year,quanter)
     
     total_waiqian = total_waiqian / 1000 * 1000
 
-    total1 = (total_bendi + total_waiqian).to_s
-    total_bendi = total_bendi.to_s
-    total_waiqian = total_waiqian.to_s 
+    total1 = change_str(total_bendi + total_waiqian)
+    total_bendi = change_str(total_bendi)
+    total_waiqian = change_str(total_waiqian)
 
     arr = get_excel(Dir.pwd + "/../网络数据/csv/独立车商_out.csv",'A2','A11')
     arr1 = []

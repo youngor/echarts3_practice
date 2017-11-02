@@ -46,9 +46,9 @@ template need to be considered ...
 
 #####
 ALL:
-.3 cd /data/scripts/report/shell sh -x all.sh then copy csv to csv...
+.3 cd /data/scripts/report/shell sh -x arr.sh then copy csv to csv...(change arr.sh necessary!)
 in windows, git clone;
 cd tools
-pro.bat 凯越
+pro.bat 凯越 (might need change 2017 and quanter!)
 Done!
 ####

@@ -1,12 +1,13 @@
 @echo ON
 chcp 65001
 
-copy /A /V /Y c:\temp\周转天数.csv .\周转天数\csv\in_原始数据.csv
-copy /A /V /Y c:\temp\网络数据.csv .\网络数据\csv\in_原始数据.csv
-copy /A /V /Y c:\temp\流向数据.csv .\流向处理\csv\in_原始数据.csv
-
-rem set cx1=凯越 宝马5系 奔驰C级
+rem set cx1=凯越 宝马5系 奔驰C级 嘉年华
 set cx1=%1
+
+copy /A /V /Y c:\temp\%cx1%_周转天数.csv .\周转天数\csv\in_原始数据.csv
+copy /A /V /Y c:\temp\%cx1%_网络数据.csv .\网络数据\csv\in_原始数据.csv
+copy /A /V /Y c:\temp\%cx1%_流向数据.csv .\流向处理\csv\in_原始数据.csv
+
 cd 流向处理
  ruby lxcl.rb
 
