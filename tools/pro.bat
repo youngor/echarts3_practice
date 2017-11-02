@@ -35,6 +35,8 @@ xcopy /S /V /F /Y /I ..\server\public\wangluoshuju\* output\%cx1%\网络数据
 xcopy /S /V /F /Y /I ..\server\public\zhouzhuantianshu\* output\%cx1%\周转天数
 
 cd office
-ruby e1.rb
+ruby e1.rb %cx1% '2017' '第三季度'
 
-copy /V /Y out.doc ..\output\宝马5系\template.docx
+copy /V /Y out.doc ..\output\%cx1%\template.docx
+
+cd ..

@@ -92,7 +92,7 @@ File.open("csv/车系周转天数表_out.csv", "w",:encoding=>"gbk") { |iol|
 h1.sort!{|a| Date.parse(a[0])}
 
 #generate area...
-write_area(h1[30..-1],0,1,'zzts_cxzzts')
+write_area(h1[30..-1],0,1,'zzts_cxzzts','#d75096','#d7c896','#ff8064')
 
 ind = 0
 ########################车系价格波动表_out.csv
@@ -128,7 +128,7 @@ File.open("csv/车系价格波动表_out.csv", "w",:encoding=>"gbk") { |iol|
 
 h1.sort!{|a| Date.parse(a[0])}
 #generate area...
-write_area(h1[30..-1],0,1,'zzts_jgbd')
+write_area(h1[30..-1],0,1,'zzts_jgbd','#0f9b9b','#ffffff','#191919')
 
 #http://127.0.0.1:4567/zzts_cxzzts.html
 #http://127.0.0.1:4567/zzts_jgbd.html

@@ -102,7 +102,7 @@ def get_excel(file_name,range1,range2)
     end
 end
 
-def gen_word_replace
+def gen_word_replace(series,year,quanter)
     file =Dir.pwd+'./template.docx'
 
     
@@ -177,14 +177,14 @@ def gen_word_replace
     plfb_waiqian_percent = "#{wq_max*100/wq_sum}%"
 
     word = WIN32OLE.new('Word.Application')
-    word.visible = true
+    #word.visible = true
     old_doc = word.Documents.Open(file) 
 
     {
-        '[brand]' => '宝马5系',
+        '[brand]' => series,
         'date' => Date.today.strftime('%B %d, %Y'),
-        '[year]' => '2017',
-        '[quanter]' => '第三季度',
+        '[year]' => year,
+        '[quanter]' => quanter,
         '[top5_bendi]' => top5_bendi,
         '[top5_waiqian]' => top5_waiqian.join('、'),
         '[top5_waiqian_1]' => top5_waiqian[0],
@@ -239,4 +239,7 @@ def gen_word_replace
     word.quit
 end
 
-gen_word_replace
+pp ARGV
+series = ARGV[0]
+pp series
+gen_word_replace(series,ARGV[1],ARGV[2])

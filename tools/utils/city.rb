@@ -1006,3 +1006,7 @@ def write_bar2(recs,name_col,val_col,file_name,color1)
 
     IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
 end
+
+def to_hex(i)
+    i.to_s(16)
+end
