@@ -35,7 +35,7 @@ def group_by_col(recs,col,cs_name)
     h
 end
 
-def get_excel_and_chart(recs,col,source,file_name,js_file)
+def get_excel_and_chart(recs,col,source,file_name,js_file,color1)
 
     recs_4s = []
 
@@ -85,9 +85,9 @@ def get_excel_and_chart(recs,col,source,file_name,js_file)
     }
 
     #generate pie...
-
-    write_pie(h[0..4],0,1,js_file)
-
+    #write_pie(h[0..4],0,1,js_file)
+    ht = [h[9],h[8],h[7],h[6],h[5],h[4],h[3],h[2],h[1],h[0]]
+    write_bar2(ht,0,1,js_file,color1)
 end
 
 #http://127.0.0.1:4567/wl_4s.html
@@ -109,11 +109,11 @@ recs_3m = recs[1..-1].select { |e|
     end
 }  #d第一行的时间
 
-get_excel_and_chart(recs_3m,-2,source,'csv/4s_out.csv','wl_4s') 
+get_excel_and_chart(recs_3m,-2,source,'csv/4s_out.csv','wl_4s','#2e4e7e') 
 
 recs_3m_1 = recs_3m.select { |e|  e[-1] == '3'}  #d第一行的时间
 
-get_excel_and_chart(recs_3m_1,-2,['网络媒体','车王','澳康达','捷和'],'csv/独立车商_out.csv','wl_dlcs') 
+get_excel_and_chart(recs_3m_1,-2,['网络媒体','车王','澳康达','捷和'],'csv/独立车商_out.csv','wl_dlcs','#9d2933') 
 
 #'瓜子网' '人人车网'
 

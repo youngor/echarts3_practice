@@ -1,5 +1,9 @@
 require 'win32ole'
 require 'date'
+require 'rubyexcel'
+require '../utils/city'
+require 'pp'
+
 
 def excel
     #file ='c:/temp/15w_1708.xlsx'
@@ -66,18 +70,143 @@ def replace_doc(doc, find, repl)
 end
 
 
+def get_excel(file_name,range1,range2)
+    puts file_name
+    str = IO.read(file_name,:encoding=>"gbk")
+    s = RubyExcel::Workbook.new.load( CSV.parse( to_utf8(str) )) 
+    len = s.length
+    puts "#{len} records!"
+    r1_w = ''
+    r2_w = ''
+    r1_n = 0
+    r2_n = 0
+
+    if range1 =~ /(([a-z]|[A-Z])+)(\d+)/
+        r1_w = $1
+        r1_n = [$3.to_i,len-1].min
+    end
+
+    if range2 =~ /(([a-z]|[A-Z])+)(\d+)/
+        r2_w = $1
+        r2_n = [$3.to_i,len-1].min
+    end
+    puts "==========================>#{r1_w}#{r1_n},#{r2_w}#{r2_n} ==========================>>>>"
+    r = s.range("#{r1_w}#{r1_n}","#{r2_w}#{r2_n}").value
+    #pp r
+    if r1_w == r2_w
+        #puts "-"
+        r.flatten.find_all {|a|  a} 
+    else
+    #    puts "!" * 80 
+        r.find_all {|a|  a if a[0]} 
+    end
+end
 
 def gen_word_replace
     file =Dir.pwd+'./template.docx'
+
+    
+    top5_bendi = get_excel(Dir.pwd + "/../流向处理/csv/本地交易TOP50城市_out.csv",'A2','A6').join('、')
+    top5_waiqian = get_excel(Dir.pwd + "/../流向处理/csv/外迁TOP50城市_out.csv",'A2','A6')
+    top5_waiqian_1_5 = get_excel(Dir.pwd + "/../流向处理/csv/外迁TOP1_out.csv",'A2','A6').join('、')
+    top5_waiqian_2_5 = get_excel(Dir.pwd + "/../流向处理/csv/外迁TOP2_out.csv",'A2','A6').join('、')
+    top5_waiqian_3_5 = get_excel(Dir.pwd + "/../流向处理/csv/外迁TOP3_out.csv",'A2','A6').join('、')
+    top5_waiqian_4_5 = get_excel(Dir.pwd + "/../流向处理/csv/外迁TOP4_out.csv",'A2','A6').join('、')
+    top5_waiqian_5_5 = get_excel(Dir.pwd + "/../流向处理/csv/外迁TOP5_out.csv",'A2','A6').join('、')
+    
+    arr1 = get_excel(Dir.pwd + "/../流向处理/csv/in_原始数据.csv",'A2','J10000000')
+    
+    total_bendi = arr1.select {|a| a[6] == a[7]}.inject(0) { 
+        |result, element| 
+        result + element[-1].to_i }
+
+    total_bendi = total_bendi / 1000 * 1000    
+
+    total_waiqian = arr1.select {|a| a[6] != a[7]}.inject(0) { 
+        |result, element| 
+        result + element[-1].to_i }
+    
+    total_waiqian = total_waiqian / 1000 * 1000
+
+    total1 = (total_bendi + total_waiqian).to_s
+    total_bendi = total_bendi.to_s
+    total_waiqian = total_waiqian.to_s 
+
+    arr = get_excel(Dir.pwd + "/../网络数据/csv/独立车商_out.csv",'A2','A11')
+    arr1 = []
+    arr.each_with_index do |item, index|
+        arr1 << "（#{index+1}）#{item}"
+    end
+    top10_dlcs = arr1.join('、')
+    pp top10_dlcs
+    
+
+    arr = get_excel(Dir.pwd + "/../网络数据/csv/4s_out.csv",'A2','A11')
+    arr1 = []
+    arr.each_with_index do |item, index|
+        arr1 << "（#{index+1}）#{item}"
+    end
+    top10_4s = arr1.join('、')
+    pp top10_4s
+    #exit
+    
+    arr = get_excel(Dir.pwd + "/../流向处理/csv/排量发布_out.csv",'A2','C300')
+
+    bd_max = 0
+    wq_max = 0
+
+    plfb_bendi_T = ''
+    plfb_waiqian_T = ''
+
+    arr.each_with_index do |item, index|
+        if item[1].to_i > bd_max
+            bd_max = item[1].to_i
+            plfb_bendi_T = item[0]
+        end
+        if item[2].to_i > wq_max
+            wq_max = item[2].to_i
+            plfb_waiqian_T = item[0]
+        end
+    end
+
+    bd_sum = arr.inject(0) { |result, element| result + element[1].to_i }
+    wq_sum = arr.inject(0) { |result, element| result + element[2].to_i }
+
+    
+    plfb_bendi_percent = "#{bd_max*100/bd_sum}%"
+    plfb_waiqian_percent = "#{wq_max*100/wq_sum}%"
 
     word = WIN32OLE.new('Word.Application')
     word.visible = true
     old_doc = word.Documents.Open(file) 
 
     {
-        '凯越' => '奔驰',
+        '[brand]' => '宝马5系',
         'date' => Date.today.strftime('%B %d, %Y'),
-        '2017' => '2018'
+        '[year]' => '2017',
+        '[quanter]' => '第三季度',
+        '[top5_bendi]' => top5_bendi,
+        '[top5_waiqian]' => top5_waiqian.join('、'),
+        '[top5_waiqian_1]' => top5_waiqian[0],
+        '[top5_waiqian_2]' => top5_waiqian[1],
+        '[top5_waiqian_3]' => top5_waiqian[2],
+        '[top5_waiqian_4]' => top5_waiqian[3],
+        '[top5_waiqian_5]' => top5_waiqian[4],
+        '[top5_waiqian_1_5]' => top5_waiqian_1_5,
+        '[top5_waiqian_2_5]' => top5_waiqian_2_5,
+        '[top5_waiqian_3_5]' => top5_waiqian_3_5,
+        '[top5_waiqian_4_5]' => top5_waiqian_4_5,
+        '[top5_waiqian_5_5]' => top5_waiqian_5_5,
+        '[total1]' => total1,
+        '[total_bendi]'=> total_bendi,
+        '[total_waiqian]'=> total_waiqian,
+        '[top10_dlcs]' => top10_dlcs,
+        '[top10_4s]' => top10_4s,
+        '[plfb_bendi_T]' => plfb_bendi_T,
+        '[plfb_bendi_percent]' => plfb_bendi_percent,
+        '[plfb_waiqian_T]' => plfb_waiqian_T,
+        '[plfb_waiqian_percent]' => plfb_waiqian_percent,
+
     }.each do |key, value|
         word.Selection.HomeKey(unit=6) # start at beginning
         find = word.Selection.Find
@@ -87,7 +216,7 @@ def gen_word_replace
         end
     end
     #old_doc.Activate
-    old_doc.Content.InsertAfter (" The end.") 
+    #old_doc.Content.InsertAfter (" The end.") 
     #puts f = old_doc.Content.Find("凯越")
     #puts f.Replacement("奔驰")
     #puts old_doc.Content.Find.Found 
@@ -105,7 +234,7 @@ def gen_word_replace
     #}
     #old_doc.SaveAs Dir.pwd + "./out.doc"
     #new_doc.close
-    old_doc.Save
+    old_doc.SaveAs Dir.pwd + "./out.doc"
     old_doc.close
     word.quit
 end

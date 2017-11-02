@@ -18,7 +18,7 @@ option = {
     xAxis : [
         {
             type : 'category',
-            data : PARAM0, //[a,b]
+            data : ['1年','2年','3年','4年','5年','6年','7年','8年','9年','10年','11年','12年','13年','14年','15年','15年以上'],//PARAM0, //[a,b]
             axisTick: {
                 alignWithLabel: true
             }

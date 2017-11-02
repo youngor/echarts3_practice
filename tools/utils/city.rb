@@ -860,7 +860,7 @@ def write_pie(recs,name_col,val_col,file_name,utf8 = false,color1='#c23531')
 end
 
 #//['a',20],['b',50],['c',40]
-def write_area(recs,name_col,val_col,file_name)
+def write_area(recs,name_col,val_col,file_name,c1='#ffffff',c2='#ff0000',c3='#ff0000')
 
     name_str = ''
     val_str = ''
@@ -877,6 +877,9 @@ def write_area(recs,name_col,val_col,file_name)
     data = IO.read('../template/area.template',:encoding=>"utf-8")
     data.gsub!(/PARAM0/,"#{name_str}")
     data.gsub!(/PARAM1/,"#{val_str}")
+    data.gsub!(/PARAM2/,"#{c1}")
+    data.gsub!(/PARAM3/,"#{c2}")
+    data.gsub!(/PARAM4/,"#{c3}")
     
     puts data
 
@@ -974,4 +977,32 @@ end
 def to_utf8(str)
     #Encoding::Converter.new("gbk","utf-8").convert(str)
     $ec_2_utf8.convert(str)
+end
+
+
+#//['a',20],['b',50],['c',40]
+def write_bar2(recs,name_col,val_col,file_name,color1)
+
+    name_str = ''
+    val_str = ''
+
+    #//{value: 29, label: labelLeft}, 升序
+    (0..recs.length-1).each do |i|
+        t = recs[i]
+        #pp t
+        #pp recs
+        #name_str += "'" + $ec_2_utf8.convert(t[name_col].to_s)  + "',\n"
+        name_str += "{ value:" + $ec_2_utf8.convert(t[val_col].to_s) + ", label: labelLeft},\n"
+    end
+    
+
+    data = IO.read('../template/bar2.template',:encoding=>"utf-8")
+    data.gsub!(/PARAM0/,"#{name_str}")
+    data.gsub!(/PARAM1/,"#{color1}")
+    
+
+    
+    puts data
+
+    IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
 end

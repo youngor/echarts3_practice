@@ -7,7 +7,7 @@ option = {
         orient: 'vertical',
         x: 'left',
         y: 'center', 
-        data:  PARAM0 //['1.5L','1.6L','1.8L']
+        // data:  PARAM0 //['1.5L','1.6L','1.8L']
     },
     
     series: [

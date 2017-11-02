@@ -33,3 +33,8 @@ xcopy /S /V /F /Y /I 周转天数\csv\*  output\%cx1%\周转天数
 xcopy /S /V /F /Y /I ..\server\public\liuxiang\*  output\%cx1%\流向处理
 xcopy /S /V /F /Y /I ..\server\public\wangluoshuju\* output\%cx1%\网络数据
 xcopy /S /V /F /Y /I ..\server\public\zhouzhuantianshu\* output\%cx1%\周转天数
+
+cd office
+ruby e1.rb
+
+copy /V /Y out.doc ..\output\宝马5系\template.docx
