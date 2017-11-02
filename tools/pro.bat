@@ -23,7 +23,8 @@ ruby client_test.rb
 
 cd ..\tools
 
-del output /F /S /Q
+rem del output /F /S /Q
+rd output\%cx1% /S /Q
 mkdir output\%cx1%
 
 xcopy /S /V /F /Y /I 流向处理\csv\*  output\%cx1%\流向处理
