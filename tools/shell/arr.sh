@@ -7,11 +7,12 @@ n=${#BRANDS[@]}
 n=$n-1
 echo $n
 for i in $(seq 0 $n);  do
- echo $i
+
  b=${BRANDS[$i]}
  s=${SERSES[$i]}
 
  # do something....
  sh -x test.sh $b $s
 done
+
 
