@@ -262,10 +262,10 @@ def clfb(recs_org)
 
     v1 = v.map { |e|  to_n_point_float(e.to_f*100/sum,2) }
 
-    pp v1
+    #pp v1
 
-    puts k.join(',')
-    puts v1.join(',')
+    #puts k.join(',')
+    #puts v1.join(',')
     #pp k
     #pp v
 
@@ -317,7 +317,7 @@ def plfb(recs_org)
     h = recs_org.map { |r| r[5] }.uniq.sort { |a, b| a.to_f <=> b.to_f }
 
     h = h - [to_gbk('未知')]
-    pp h
+    #pp h
 
 
     h.each do |c|
@@ -380,12 +380,12 @@ def plfb(recs_org)
         io << head << "\n"
         (0...k3.length).each do |i|
             t = k2.index(k3[i])
-            pp t
-            pp v2
+            #pp t
+            #pp v2
             a = t ? v2[t] : 0
-            pp t
-            pp i
-            pp k3[i]
+            #pp t
+            #pp i
+            #pp k3[i]
             t = k1.index(k3[i])
             b = t ? v1[t] : 0 
 
