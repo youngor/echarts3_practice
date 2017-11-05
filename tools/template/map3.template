@@ -48,7 +48,7 @@ var series = [];
         lineStyle: {
             normal: {
                 color: color[i],
-                width: 1,
+                width: 3,
                 curveness: 0.2
             }
         },
@@ -68,7 +68,7 @@ var series = [];
         lineStyle: {
             normal: {
                 color: color[i],
-                width: 1,
+                width: 3,
                 opacity: 0.4,
                 curveness: 0.2
             }

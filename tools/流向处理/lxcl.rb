@@ -209,7 +209,7 @@ def lxtj(recs_org)
 
 
     #write_map(recs,0,3,'bd_top50')
-    write_buble(ttt,0,[1,2,3],'bd_top50')
+    write_buble(ttt,0,[1,2,3],'bd_top50','#2e4e7e','#2e4e7e')
 
 
     # 地区  外迁率vo 外迁指数io    外迁量o** => 外迁TOP50城市
@@ -224,7 +224,7 @@ def lxtj(recs_org)
         end
     }
 
-    write_map(recs,0,1,'w_top50')
+    write_map(recs,0,1,'w_top50','#9d2933')
 
     #五个城市是 recs[0..4]
     #puts recs[0..4].join(',')
@@ -270,11 +270,19 @@ def clfb(recs_org)
     #pp v
 
     data = IO.read('../template/bar.template',:encoding=>"utf-8")
-    data.gsub!(/PARAM0/,"[#{to_utf8(k.join(','))}]")
-    data.gsub!(/PARAM1/,"[#{v1.join(',')}]")
+    #data.gsub!(/PARAM0/,"[#{to_utf8(k.join(','))}]")
+    #data.gsub!(/PARAM1/,"[#{v1.join(',')}]")
+
+    data.gsub!(/PARAM0/,'#2e4e7e') #color
+
+    data.gsub!(/PARAM1/,"'1年','2年','3年','4年','5年','6年','7年','8年','9年','10年','11年','12年','13年','14年','15年','15年以上'") #'1年','2年' xaxis
+
+    data.gsub!(/PARAM2/,'75%') #80%
+    data.gsub!(/PARAM3/,"#{v1.join(',')}") # 1,2,3
 
 
-    puts data
+
+    #puts data
 
     IO.write('../../server/public/my_js/clfb.js',data,:encoding=>"utf-8")
 

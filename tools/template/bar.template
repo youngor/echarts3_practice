@@ -2,7 +2,7 @@
 
 option = {
     backgroundColor: '#ffffff',
-    color: ['#3398DB'],
+    color: ['PARAM0'], //['#2e4e7e'],
     tooltip : {
         trigger: 'axis',
         axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -18,7 +18,9 @@ option = {
     xAxis : [
         {
             type : 'category',
-            data : ['1年','2年','3年','4年','5年','6年','7年','8年','9年','10年','11年','12年','13年','14年','15年','15年以上'],//PARAM0, //[a,b]
+            data : [
+                PARAM1
+            ],//PARAM0, //[a,b] '1年','2年','3年','4年','5年','6年','7年','8年','9年','10年','11年','12年','13年','14年','15年','15年以上'
             axisTick: {
                 alignWithLabel: true
             }
@@ -38,8 +40,8 @@ option = {
         {
             name:'',
             type:'bar',
-            barWidth: '60%',
-            data:PARAM1  //[a,b]
+            barWidth: 'PARAM2', //'80%',
+            data: [ PARAM3 ] //[a,b]
         }
     ]
 };

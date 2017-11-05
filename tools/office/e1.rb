@@ -83,12 +83,12 @@ def get_excel(file_name,range1,range2)
 
     if range1 =~ /(([a-z]|[A-Z])+)(\d+)/
         r1_w = $1
-        r1_n = [$3.to_i,len-1].min
+        r1_n = [$3.to_i,len].min
     end
 
     if range2 =~ /(([a-z]|[A-Z])+)(\d+)/
         r2_w = $1
-        r2_n = [$3.to_i,len-1].min
+        r2_n = [$3.to_i,len].min
     end
     puts "==========================>#{r1_w}#{r1_n},#{r2_w}#{r2_n} ==========================>>>>"
     r = s.range("#{r1_w}#{r1_n}","#{r2_w}#{r2_n}").value
@@ -119,6 +119,7 @@ def gen_word_replace(series,year,quanter)
     total_bendi = arr1.select {|a| a[6] == a[7]}.inject(0) { 
         |result, element| 
         result + element[-1].to_i }
+    #puts "total_bendi=#{total_bendi}"
 
     total_bendi = total_bendi / 1000 * 1000    
 
@@ -128,9 +129,13 @@ def gen_word_replace(series,year,quanter)
     
     total_waiqian = total_waiqian / 1000 * 1000
 
+    #puts total_bendi,total_waiqian
+
     total1 = change_str(total_bendi + total_waiqian)
     total_bendi = change_str(total_bendi)
     total_waiqian = change_str(total_waiqian)
+    #puts "total1=#{total1}",total_bendi,total_waiqian
+    #exit
 
     arr = get_excel(Dir.pwd + "/../网络数据/csv/独立车商_out.csv",'A2','A11')
     arr1 = []
@@ -151,6 +156,7 @@ def gen_word_replace(series,year,quanter)
     #exit
     
     arr = get_excel(Dir.pwd + "/../流向处理/csv/排量发布_out.csv",'A2','C300')
+    pp arr
 
     bd_max = 0
     wq_max = 0
@@ -169,12 +175,22 @@ def gen_word_replace(series,year,quanter)
         end
     end
 
-    bd_sum = arr.inject(0) { |result, element| result + element[1].to_i }
+    bd_sum = arr.inject(0) { |result, element| 
+        puts result
+        pp element
+        result + element[1].to_i 
+    }
     wq_sum = arr.inject(0) { |result, element| result + element[2].to_i }
 
-    
+    puts "bd_max=#{bd_max}"
+    puts bd_sum
+
     plfb_bendi_percent = "#{bd_max*100/bd_sum}%"
     plfb_waiqian_percent = "#{wq_max*100/wq_sum}%"
+
+    puts plfb_bendi_percent
+
+    
 
     word = WIN32OLE.new('Word.Application')
     #word.visible = true

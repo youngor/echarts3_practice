@@ -28,13 +28,13 @@ option = {
         {
             name:'',
             type:'pie',
-            radius : '85%',
+            radius : [180, 50],
             center: ['50%', '50%'],
             data:[
                 //{value:335, name:'直接访问'}, {value:310, name:'邮件营销'},
                 PARAM2
             ].sort(function (a, b) { return a.value - b.value; }),
-            roseType: 'radius',
+            roseType: 'area',
             label: {
                 normal: {
                     textStyle: {

@@ -85,7 +85,7 @@ option = {
             },
             itemStyle: {
                 normal: {
-                    color: '#ddb926'           // 小散点颜色
+                    color: 'PARAM4' //'#ddb926'           // 小散点颜色
                 }
             }
         },

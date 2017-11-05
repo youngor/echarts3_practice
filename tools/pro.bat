@@ -1,6 +1,14 @@
 @echo ON
 chcp 65001
 
+del ..\server\public\my_js\* /S /Q
+del ..\server\public\liuxiang\* /S /Q
+del ..\server\public\wangluoshuju\* /S /Q
+del ..\server\public\zhouzhuantianshu\* /S /Q
+del 流向处理\csv\* /S /Q
+del 周转天数\csv\* /S /Q
+del 网络数据\csv\* /S /Q
+
 rem set cx1=凯越 宝马5系 奔驰C级 嘉年华
 set cx1=%1
 
@@ -37,8 +45,9 @@ xcopy /S /V /F /Y /I ..\server\public\wangluoshuju\* output\%cx1%\网络数据
 xcopy /S /V /F /Y /I ..\server\public\zhouzhuantianshu\* output\%cx1%\周转天数
 
 cd office
+del out.doc /S /Q
 ruby e1.rb %cx1% '2017' '第三季度'
 
-copy /V /Y out.doc ..\output\%cx1%\template.docx
+copy /V /Y out.doc ..\output\%cx1%\result.docx
 
 cd ..

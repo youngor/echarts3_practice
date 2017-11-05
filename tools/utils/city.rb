@@ -941,7 +941,7 @@ def write_map3(recs,name_col,val_col,file_name,from_city,color1='#f4e925')
 end
 
 #////[0.64,1,947,'北京'],
-def write_buble(recs,name_col,val_col_arr,file_name)
+def write_buble(recs,name_col,val_col_arr,file_name,c1,c2)
     str1 = ''
     min = 0
     max = 0
@@ -959,8 +959,8 @@ def write_buble(recs,name_col,val_col_arr,file_name)
 
     data = IO.read('../template/buble.template',:encoding=>"utf-8")
     data.gsub!(/PARAM0/,"#{str1}")
-    #data.gsub!(/PARAM1/,"#{$cities_gis}")
-    #data.gsub!(/PARAM2/,color1)
+    data.gsub!(/PARAM1/,c1)
+    data.gsub!(/PARAM2/,c2)
 
     puts data
 
@@ -1007,6 +1007,41 @@ def write_bar2(recs,name_col,val_col,file_name,color1)
     IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
 end
 
+#//['a',20],['b',50],['c',40]
+def write_bar(recs,name_col,val_col,file_name,c1,c2,c3,spec=false)
+
+    name_str = ''
+    val_str = ''
+
+    #//{value: 29, label: labelLeft}, 升序
+    (0..recs.length-1).each do |i|
+        t = recs[i]
+        #pp t
+        #pp recs
+        name_str += "'" + $ec_2_utf8.convert(t[name_col].to_s)  + "',"
+        val_str += "" + $ec_2_utf8.convert(t[val_col].to_s) + ","
+    end
+    
+
+    data = IO.read('../template/bar.template',:encoding=>"utf-8")
+
+    data.gsub!(/PARAM0/,c1) #color
+
+    if spec
+        data.gsub!(/PARAM1/,"'1年','2年','3年','4年','5年','6年','7年','8年','9年','10年','11年','12年','13年','14年','15年','15年以上'") #'1年','2年' xaxis
+    else
+        data.gsub!(/PARAM1/,name_str) #'1年','2年' xaxis
+    end
+
+    data.gsub!(/PARAM2/,c3) #80%
+    data.gsub!(/PARAM3/,val_str) # 1,2,3
+    
+
+    
+    puts data
+
+    IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
+end
 def to_hex(i)
     i.to_s(16)
 end

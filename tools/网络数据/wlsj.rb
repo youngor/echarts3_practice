@@ -67,9 +67,17 @@ def get_excel_and_chart(recs,col,source,file_name,js_file,color1)
     h.each { |k,v|  cs_tol += v }
     #pp cs_tol
 
+    #pp h
     t10 = 0
     (0...10).each do |i|
-        t10 += h[i][1]    
+        begin
+            t10 += h[i][1]    #???????????????????
+        rescue Exception => e  
+            puts h[i]
+            puts e.message  
+            puts e.backtrace.inspect 
+            exit
+        end
     end
 
     t10p =  to_n_point_float(t10*100.0/cs_tol,2)
@@ -169,7 +177,8 @@ File.open('csv/电商top100_out.csv', "w",:encoding=>"gbk") { |iol|
 
 #generate area graph...
 h = h.to_a.sort!{|a| Date.parse(a[0])}
-write_area(h[30..-1],0,1,'wl_dstop100')
+#write_area(h[30..-1],0,1,'wl_dstop100')
+write_bar(h[30..-1],0,1,'wl_dstop100','#9d2933','','90%')
 
 # 供应指数
 h = {}
@@ -224,7 +233,7 @@ File.open('csv/供应指数_out.csv', "w",:encoding=>"gbk") { |iol|
 }
 
 t = t.to_a.sort!{|a| Date.parse(a[0])}
-write_area(t[0..max],0,1,'wl_gyzs','#ffff44','#ff4683','#0f6496')
+write_area(t[0..max],0,1,'wl_gyzs','#576b7c','#25f96e','#576b7c')
 
 #############价格波动！
 ## TODO,read from db or tianyan?
