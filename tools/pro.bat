@@ -1,5 +1,7 @@
-@echo ON
+@echo On
 chcp 65001
+
+cls
 
 del ..\server\public\my_js\* /S /Q
 del ..\server\public\liuxiang\* /S /Q

@@ -854,7 +854,7 @@ def write_pie(recs,name_col,val_col,file_name,utf8 = false,color1='#c23531')
     data.gsub!(/PARAM3/,color1)
 
 
-    puts data
+    #puts data
 
     IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
 end
@@ -881,7 +881,7 @@ def write_area(recs,name_col,val_col,file_name,c1='#ffffff',c2='#ff0000',c3='#ff
     data.gsub!(/PARAM3/,"#{c2}")
     data.gsub!(/PARAM4/,"#{c3}")
     
-    puts data
+    #puts data
 
     IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
 end
@@ -909,7 +909,7 @@ def write_map(recs,name_col,val_col,file_name,color1='#f4e925')
     data.gsub!(/PARAM3/,"#{max}")
     data.gsub!(/PARAM4/,color1)
 
-    puts data
+    #puts data
 
     IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
 end
@@ -935,7 +935,7 @@ def write_map3(recs,name_col,val_col,file_name,from_city,color1='#f4e925')
     data.gsub!(/PARAM1/,"#{$cities_gis}")
     data.gsub!(/PARAM2/,color1)
 
-    puts data
+    #puts data
 
     IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
 end
@@ -962,7 +962,7 @@ def write_buble(recs,name_col,val_col_arr,file_name,c1,c2)
     data.gsub!(/PARAM1/,c1)
     data.gsub!(/PARAM2/,c2)
 
-    puts data
+    #puts data
 
     IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
 end
@@ -1002,7 +1002,7 @@ def write_bar2(recs,name_col,val_col,file_name,color1)
     
 
     
-    puts data
+    #puts data
 
     IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
 end
@@ -1038,7 +1038,7 @@ def write_bar(recs,name_col,val_col,file_name,c1,c2,c3,spec=false)
     
 
     
-    puts data
+    #puts data
 
     IO.write("../../server/public/my_js/#{file_name}.js",data,:encoding=>"utf-8")
 end

@@ -335,10 +335,10 @@ def plfb(recs_org)
     end
 
 
-    puts k1.join(',')
-    puts v1.join(',')
-    puts k2.join(',')
-    puts v2.join(',')
+    #puts k1.join(',')
+    #puts v1.join(',')
+    #puts k2.join(',')
+    #puts v2.join(',')
     #pp k
     #pp v
     k3 = k1 
@@ -370,7 +370,7 @@ def plfb(recs_org)
     data.gsub!(/PARAM2/,"[#{str2}]")
 
 
-    puts data
+    #puts data
 
     IO.write('../../server/public/my_js/plfb.js',data,:encoding=>"utf-8")
 

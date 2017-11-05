@@ -73,6 +73,8 @@ def get_excel_and_chart(recs,col,source,file_name,js_file,color1)
         begin
             t10 += h[i][1]    #???????????????????
         rescue Exception => e  
+            puts "i=#{i}"
+            puts h
             puts h[i]
             puts e.message  
             puts e.backtrace.inspect 
@@ -195,7 +197,7 @@ dates.each do |d|
     end
 end
 
-pp h
+#pp h
 h = h.to_a
 
 def get_avg(h,i,n=30)
